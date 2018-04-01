@@ -2,6 +2,14 @@ version: '3'
 
 services:
 
+  home:
+    build: ./docker-nginx-home
+    container_name: home
+    volumes:
+      - ./docker-nginx-home:/usr/share/nginx/html
+    ports:
+      - 8000:80
+
   shop:
     build: ./docker-shop
     container_name: shop
@@ -32,17 +40,26 @@ services:
     volumes:
       - logging:/sidecar
 
-  web1:
-    image: dockercloud/hello-world
-    container_name: web1
-    ports:
-      - 81:80
+#  web1:
+#    image: dockercloud/hello-world
+#    container_name: web1
+#    ports:
+#      - 81:80
+#
+#  web2:
+#    image: dockercloud/hello-world
+#    container_name: web2
+#    ports:
+#      - 82:80
 
-  web2:
-    image: dockercloud/hello-world
-    container_name: web2
+  preview:
+    build: ./docker-nginx-preview
+    container_name: preview
+    volumes:
+      - ./docker-nginx-preview:/usr/share/nginx/html
     ports:
-      - 82:80
+      - 8001:80
+
 
 volumes:
     logging:
