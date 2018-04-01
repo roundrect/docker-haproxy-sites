@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+
+  shop:
+    build: ./docker-shop
+    container_name: shop
+    volumes:
+      - ./docker-shop:/var/www/html
+    ports:
+      - 5000:80
+
+  shop-api:
+    build: ./docker-shop-api
+    container_name: shop-api
+    volumes:
+      - ./docker-shop-api:/usr/src/app
+    ports:
+      - 5001:80
+
+  haproxy:
+    build: ./docker-haproxy
+    container_name: haproxy
+    volumes:
+      - logging:/sidecar
+    ports:
+      - 80:80
+
+  syslog-sidecar:
+    build: ./docker-stack-logging
+    container_name: logging
+    volumes:
+      - logging:/sidecar
+
+  web1:
+    image: dockercloud/hello-world
+    container_name: web1
+    ports:
+      - 81:80
+
+  web2:
+    image: dockercloud/hello-world
+    container_name: web2
+    ports:
+      - 82:80
+
+volumes:
+    logging:
