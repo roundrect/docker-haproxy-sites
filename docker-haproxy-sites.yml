@@ -1,0 +1,31 @@
+# Stack config file for use with Docker Cloud
+# https://cloud.docker.com/app/roundrect/stack/list/1?page_size=10
+# TODO 
+# - add the logging machine and consolidate logs
+# - add SSL
+haproxy:
+  autoredeploy: true
+  image: 'roundrect/docker-haproxy:latest'
+  ports:
+    - '80:80'
+  restart: always
+  volumes:
+    - '/logging:/sidecar'
+home:
+  autoredeploy: true
+  image: 'roundrect/docker-nginx-home:latest'
+  restart: always
+preview:
+  autoredeploy: true
+  image: 'roundrect/docker-nginx-preview:latest'
+  restart: always
+shop:
+  autoredeploy: true
+  image: 'roundrect/docker-shop:latest'
+  links:
+    - shop-api
+  restart: always
+shop-api:
+  autoredeploy: true
+  image: 'roundrect/docker-shop-api:latest'
+  restart: always
