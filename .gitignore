@@ -1,2 +1,5 @@
 .idea/
 .DS_Store
+docker-nginx-home/
+docker-nginx-preview/
+docker-stack-logging/
